@@ -2,10 +2,11 @@ class UsersController < ApplicationController
   def create
     user = User.create(user_params)
     if user.valid?
-      session[:user_id] ||= user_id
+      session[:user_id] ||= user.id
       render json: user, status: :created
     else
       render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
+    end
   end
 
   def show
@@ -14,7 +15,7 @@ class UsersController < ApplicationController
       render json: user
     else
       render json: { error: "Sorry buddy! Not Authorized..." }, status: :unprocessable_entity
-
+    end
   end
 
   private
